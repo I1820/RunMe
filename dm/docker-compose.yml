@@ -1,0 +1,9 @@
+version: "2"
+
+services:
+  mongodb:
+    image: aiotrc/dm
+    environment:
+      - db_url=172.17.0.1
+    ports:
+      - 1372:1372
