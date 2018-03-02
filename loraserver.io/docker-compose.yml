@@ -11,7 +11,9 @@ services:
       - NET_ID=010203
       - BAND=EU_863_870
       - REDIS_URL=redis://redis:6379
-      - GW_MQTT_SERVER=tcp://80.253.154.27:1883
+        # - GW_MQTT_SERVER=tcp://80.253.154.27:1883
+      - GW_MQTT_SERVER=tcp://mosquitto:1883
+        # - GW_MQTT_SERVER=tcp://185.51.202.104:1883
       - GW_SERVER_JWT_SECRET=verysecret
       - POSTGRES_DSN=postgres://loraserver_ns:loraserver_ns@postgresql_ns/loraserver_ns?sslmode=disable
       - JS_SERVER=http://appserver:8003
@@ -29,6 +31,13 @@ services:
       - HTTP_TLS_CERT=/etc/lora-app-server/certs/http.pem
       - HTTP_TLS_KEY=/etc/lora-app-server/certs/http-key.pem
       - AS_PUBLIC_SERVER=appserver:8001
+
+  gatewaybridge:
+    ports:
+      - 1700:1700/udp
+    image: loraserver/lora-gateway-bridge
+    environment:
+      - MQTT_SERVER=tcp://mosquitto:1883
 
   postgresql_ns:
     image: postgres:9.6-alpine
