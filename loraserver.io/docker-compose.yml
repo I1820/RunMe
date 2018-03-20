@@ -11,9 +11,7 @@ services:
       - NET_ID=010203
       - BAND=EU_863_870
       - REDIS_URL=redis://redis:6379
-        # - GW_MQTT_SERVER=tcp://80.253.154.27:1883
       - GW_MQTT_SERVER=tcp://mosquitto:1883
-        # - GW_MQTT_SERVER=tcp://185.51.202.104:1883
       - GW_SERVER_JWT_SECRET=verysecret
       - POSTGRES_DSN=postgres://loraserver_ns:loraserver_ns@postgresql_ns/loraserver_ns?sslmode=disable
       - JS_SERVER=http://appserver:8003
@@ -63,6 +61,8 @@ services:
     image: redis:4-alpine
 
   mosquitto:
+    image: erlio/docker-vernemq
     ports:
-      - 1884:1883
-    image: eclipse-mosquitto
+      - 1883:1883
+    environment:
+      - DOCKER_VERNEMQ_ALLOW_ANONYMOUS=on
