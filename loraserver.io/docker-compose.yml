@@ -41,8 +41,6 @@ services:
     image: postgres:9.6-alpine
     ports:
       - 5432
-    volumes:
-      - ./postgresql/ns/data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=loraserver_ns
       - POSTGRES_USER=loraserver_ns
@@ -52,8 +50,6 @@ services:
     image: postgres:9.6-alpine
     ports:
       - 5432
-    volumes:
-      - ./postgresql/as/data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=loraserver_as
       - POSTGRES_USER=loraserver_as
