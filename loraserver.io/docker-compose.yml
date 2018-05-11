@@ -41,8 +41,6 @@ services:
     image: postgres:9.6-alpine
     ports:
       - 5432
-    volumes:
-      - $PWD/postgresql/ns/data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=loraserver_ns
       - POSTGRES_USER=loraserver_ns
@@ -52,8 +50,6 @@ services:
     image: postgres:9.6-alpine
     ports:
       - 5432
-    volumes:
-      - $PWD/postgresql/as/data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=loraserver_as
       - POSTGRES_USER=loraserver_as
@@ -65,8 +61,7 @@ services:
     image: redis:4-alpine
 
   mosquitto:
-    image: erlio/docker-vernemq
+    image: eclipse-mosquitto
     ports:
+      - 9001:9001
       - 1883:1883
-    environment:
-      - DOCKER_VERNEMQ_ALLOW_ANONYMOUS=on
