@@ -4,7 +4,8 @@ services:
   uplink:
     image: aiotrc/uplink
     environment:
-      - broker_url=172.23.132.37:1883
-      - db_url=172.17.0.1
-      - decoder_url=172.17.0.1
-      - pm_url=172.17.0.1
+      - broker_url=172.23.132.37:1884
+      - db_url=mongodb://172.17.0.1
+      - decoder_host=172.17.0.1
+      - pm_url=http://172.17.0.1:8080
+      - TZ=Asia/Tehran

@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  downlink:
+    image: aiotrc/downlink
+    ports:
+      - "1373:1373"
+    environment:
+      - broker_url=172.23.132.37:1884
+      - encoder_host=172.17.0.1
+      - pm_url=http://172.17.0.1:8080
