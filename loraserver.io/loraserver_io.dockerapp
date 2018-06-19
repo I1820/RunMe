@@ -1,0 +1,91 @@
+# This section contains your application metadata.
+# Version of the application
+version: 0.1.0
+# Name of the application
+name: loraserver_io
+# A short description of the application
+description: 
+# Namespace to use when pushing to a registry. This is typically your Hub username.
+namespace: 1995parham
+# List of application maitainers with name and email for each
+maintainers:
+  - name: Parham Alvani
+    email: parham.alvani@gmail.com
+# Specify false here if your application doesn't support Swarm or Kubernetes
+targets:
+  swarm: true
+  kubernetes: true
+
+--
+# This section contains the Compose file that describes your application services.
+version: "2"
+
+services:
+  loraserver:
+    image: loraserver/loraserver
+    ports:
+      - 8000:8000
+    environment:
+      - DB_AUTOMIGRATE=true
+      - LOG_NODE_FRAMES=true
+      - NET_ID=010203
+      - BAND=EU_863_870
+      - REDIS_URL=redis://redis:6379
+      - GW_MQTT_SERVER=tcp://mosquitto:1883
+      - GW_SERVER_JWT_SECRET=verysecret
+      - POSTGRES_DSN=postgres://loraserver_ns:loraserver_ns@postgresql_ns/loraserver_ns?sslmode=disable
+      - JS_SERVER=http://appserver:8003
+
+  appserver:
+    image: loraserver/lora-app-server
+    ports:
+      - 8080:8080
+    environment:
+      - DB_AUTOMIGRATE=true
+      - REDIS_URL=redis://redis:6379
+      - POSTGRES_DSN=postgres://loraserver_as:loraserver_as@postgresql_as/loraserver_as?sslmode=disable
+      - MQTT_SERVER=tcp://mosquitto:1883
+      - JWT_SECRET=verysecret
+      - HTTP_TLS_CERT=/etc/lora-app-server/certs/http.pem
+      - HTTP_TLS_KEY=/etc/lora-app-server/certs/http-key.pem
+      - AS_PUBLIC_SERVER=appserver:8001
+
+  gatewaybridge:
+    ports:
+      - 1700:1700/udp
+    image: loraserver/lora-gateway-bridge
+    environment:
+      - MQTT_SERVER=tcp://mosquitto:1883
+
+  postgresql_ns:
+    image: postgres:9.6-alpine
+    ports:
+      - 5432
+    environment:
+      - POSTGRES_PASSWORD=loraserver_ns
+      - POSTGRES_USER=loraserver_ns
+      - POSTGRES_DB=loraserver_ns
+
+  postgresql_as:
+    image: postgres:9.6-alpine
+    ports:
+      - 5432
+    environment:
+      - POSTGRES_PASSWORD=loraserver_as
+      - POSTGRES_USER=loraserver_as
+      - POSTGRES_DB=loraserver_as
+
+  redis:
+    ports:
+      - 6379
+    image: redis:4-alpine
+
+  mosquitto:
+    image: eclipse-mosquitto
+    ports:
+      - 9001:9001
+      - 1883:1883
+
+--
+# This section contains the default values for your application settings.
+{}
