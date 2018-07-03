@@ -39,6 +39,8 @@ services:
 
   postgresql_ns:
     image: postgres:9.6-alpine
+    volumes:
+      - ./postgresql/ns/data:/var/lib/postgresql/data
     ports:
       - 5432
     environment:
@@ -48,6 +50,8 @@ services:
 
   postgresql_as:
     image: postgres:9.6-alpine
+    volumes:
+      - ./postgresql/as/data:/var/lib/postgresql/data
     ports:
       - 5432
     environment:
