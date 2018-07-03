@@ -6,4 +6,4 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - $PWD/mongo/data:/data/db
+      - ./mongo/data:/data/db
