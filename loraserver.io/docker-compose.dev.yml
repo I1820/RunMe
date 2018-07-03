@@ -1,0 +1,23 @@
+version: "2"
+
+services:
+  loraserver:
+    ports:
+      - 7999:8000
+    environment:
+      - GW_MQTT_SERVER=tcp://172.17.0.1:1883
+
+  appserver:
+    ports:
+      - 8004:8080
+    environment:
+      - MQTT_SERVER=tcp://mosquitto:1883
+
+  redis:
+    ports:
+      - 6379
+    image: redis:4-alpine
+
+  mosquitto:
+    ports:
+      - 1885:1883

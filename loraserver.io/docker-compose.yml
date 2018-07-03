@@ -3,44 +3,29 @@ version: "2"
 services:
   loraserver:
     image: loraserver/loraserver
-    ports:
-      - 8000:8000
     environment:
       - DB_AUTOMIGRATE=true
       - LOG_NODE_FRAMES=true
       - NET_ID=010203
       - BAND=EU_863_870
       - REDIS_URL=redis://redis:6379
-      - GW_MQTT_SERVER=tcp://mosquitto:1883
       - GW_SERVER_JWT_SECRET=verysecret
       - POSTGRES_DSN=postgres://loraserver_ns:loraserver_ns@postgresql_ns/loraserver_ns?sslmode=disable
       - JS_SERVER=http://appserver:8003
 
   appserver:
     image: loraserver/lora-app-server
-    ports:
-      - 8080:8080
     environment:
       - DB_AUTOMIGRATE=true
       - REDIS_URL=redis://redis:6379
       - POSTGRES_DSN=postgres://loraserver_as:loraserver_as@postgresql_as/loraserver_as?sslmode=disable
-      - MQTT_SERVER=tcp://mosquitto:1883
       - JWT_SECRET=verysecret
       - HTTP_TLS_CERT=/etc/lora-app-server/certs/http.pem
       - HTTP_TLS_KEY=/etc/lora-app-server/certs/http-key.pem
       - AS_PUBLIC_SERVER=appserver:8001
 
-  gatewaybridge:
-    ports:
-      - 1700:1700/udp
-    image: loraserver/lora-gateway-bridge
-    environment:
-      - MQTT_SERVER=tcp://mosquitto:1883
-
   postgresql_ns:
     image: postgres:9.6-alpine
-    volumes:
-      - ./postgresql/ns/data:/var/lib/postgresql/data
     ports:
       - 5432
     environment:
@@ -50,8 +35,6 @@ services:
 
   postgresql_as:
     image: postgres:9.6-alpine
-    volumes:
-      - ./postgresql/as/data:/var/lib/postgresql/data
     ports:
       - 5432
     environment:
@@ -60,12 +43,9 @@ services:
       - POSTGRES_DB=loraserver_as
 
   redis:
+    image: redis:4-alpine
     ports:
       - 6379
-    image: redis:4-alpine
 
   mosquitto:
     image: eclipse-mosquitto
-    ports:
-      - 9001:9001
-      - 1883:1883
