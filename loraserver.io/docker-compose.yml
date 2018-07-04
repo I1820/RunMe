@@ -3,6 +3,7 @@ version: "2"
 services:
   loraserver:
     image: loraserver/loraserver
+    restart: always
     environment:
       - DB_AUTOMIGRATE=true
       - LOG_NODE_FRAMES=true
@@ -15,6 +16,7 @@ services:
 
   appserver:
     image: loraserver/lora-app-server
+    restart: always
     environment:
       - DB_AUTOMIGRATE=true
       - REDIS_URL=redis://redis:6379
@@ -26,6 +28,7 @@ services:
 
   postgresql_ns:
     image: postgres:9.6-alpine
+    restart: always
     ports:
       - 5432
     environment:
@@ -35,6 +38,7 @@ services:
 
   postgresql_as:
     image: postgres:9.6-alpine
+    restart: always
     ports:
       - 5432
     environment:
@@ -44,8 +48,10 @@ services:
 
   redis:
     image: redis:4-alpine
+    restart: always
     ports:
       - 6379
 
   mosquitto:
+    restart: always
     image: eclipse-mosquitto

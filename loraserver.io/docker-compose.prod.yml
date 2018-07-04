@@ -22,6 +22,8 @@ services:
       - ./postgresql/as/data:/var/lib/postgresql/data
 
   gatewaybridge:
+    image: loraserver/lora-gateway-bridge
+    restart: always
     ports:
       - 1700:1700/udp
     environment:
