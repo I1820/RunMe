@@ -8,12 +8,12 @@
 # [] Created By : Parham Alvani <parham.alvani@gmail.com>
 # =======================================
 start-loraserver() {
-        if [ $ENV = "prod" ]; then
-                docker-compose -f loraserver.io/docker-compose.yml -f loraserver.io/docker-compose.prod.yml $@
-        elif [ $ENV = "dev" ]; then
-                docker-compose -f loraserver.io/docker-compose.yml -f loraserver.io/docker-compose.dev.yml $@
+        if [[ $ENV = "prod" ]]; then
+                docker-compose -f loraserver.io/docker-compose.yml -p loraserver-prod -f loraserver.io/docker-compose.prod.yml $@
+        elif [[ $ENV = "dev" ]]; then
+                docker-compose -f loraserver.io/docker-compose.yml -p loraserver-dev -f loraserver.io/docker-compose.dev.yml $@
         else
-                docker-compose -f loraserver.io/docker-compose.yml -f loraserver.io/docker-compose.home.yml $@
+                docker-compose -f loraserver.io/docker-compose.yml -p loraserver-home -f loraserver.io/docker-compose.home.yml $@
         fi
 }
 
