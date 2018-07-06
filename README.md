@@ -1,2 +1,3 @@
 # Server
-ISRC Platform server configuration
+## Introduction
+ISRC Platform server configuration.
