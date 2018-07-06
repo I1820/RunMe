@@ -8,32 +8,44 @@
 # [] Created By : Parham Alvani <parham.alvani@gmail.com>
 # =======================================
 start-loraserver() {
+	local name="loraserverio"
+
         if [[ $ENV = "prod" ]]; then
-                docker-compose -f loraserver.io/docker-compose.yml -p loraserver-prod -f loraserver.io/docker-compose.prod.yml $@
+                docker-compose -f loraserver.io/docker-compose.yml -p $name-prod -f loraserver.io/docker-compose.prod.yml $@
         elif [[ $ENV = "dev" ]]; then
-                docker-compose -f loraserver.io/docker-compose.yml -p loraserver-dev -f loraserver.io/docker-compose.dev.yml $@
+                docker-compose -f loraserver.io/docker-compose.yml -p $name-dev -f loraserver.io/docker-compose.dev.yml $@
         else
-                docker-compose -f loraserver.io/docker-compose.yml -p loraserver-home -f loraserver.io/docker-compose.home.yml $@
+                docker-compose -f loraserver.io/docker-compose.yml -p $name-home -f loraserver.io/docker-compose.home.yml $@
         fi
 }
 
 start-mongodb() {
+	local name=""
+
         docker-compose -f mongodb/docker-compose.yml $@
 }
 
 start-pm() {
+	local name=""
+
         docker-compose -f pm/docker-compose.yml $@
 }
 
 start-dm() {
+	local name=""
+
         docker-compose -f dm/docker-compose.yml $@
 }
 
 start-uplink() {
+	local name=""
+
         docker-compose -f uplink/docker-compose.yml $@
 }
 
 start-downlink() {
+	local name=""
+
         docker-compose -f downlink/docker-compose.yml $@
 }
 
