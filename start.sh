@@ -49,6 +49,12 @@ start-downlink() {
         docker-compose -f downlink/docker-compose.yml $@
 }
 
+start_prometheus() {
+	local name=""
+
+        docker-compose -f prometheus/docker-compose.yml $@
+}
+
 start-uprojects() {
         # el (project) containers
         docker ps -a --filter name="el_*" --format "{{.ID}}" | xargs docker start
@@ -69,6 +75,7 @@ usage() {
 
         echo "mongodb           docker-compose mongodb"
         echo "loraserver        docker-compose brocaar/loraserver"
+        echo "prometheus        docker-compose prom/prometheus"
         echo
         echo "dm        docker-compose aiotrc/dm"
         echo "pm        docker-compose aiotrc/pm"
@@ -98,4 +105,5 @@ if [ $(type -t start-$cmd)"" = 'function' ]; then
         printf "Done. Took %ds.\n" $took
 else
         echo "Unknown service: $cmd"
+        usage
 fi
