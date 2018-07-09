@@ -2,6 +2,16 @@
 ## Introduction
 ISRC Platform server configuration.
 
+## 1995parham Backends
+
+| Service          | Abbr     | Port |
+| ---------------- |:--------:| ----:|
+| Project Manager  | pm       | 8080 |
+| Downlink         | downlink | 1373 |
+| Data Manager     | dm       | 1372 |
+| Gateway Manager  | gm       | 1374 |
+
+
 ## LoRa Server Docker setup
 
 This repository contains a skeleton to setup the [LoRa Server](https://www.loraserver.io)
