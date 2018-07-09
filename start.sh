@@ -43,7 +43,7 @@ start-downlink() {
         docker-compose -f downlink/docker-compose.yml $@
 }
 
-start_prometheus() {
+start-prometheus() {
 	local name=""
 
         docker-compose -f prometheus/docker-compose.yml $@
