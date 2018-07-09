@@ -1,25 +1,25 @@
-version: "2"
+version: "3"
 
 services:
   loraserver:
-    image: loraserver/loraserver:1
+    image: loraserver/loraserver
     volumes:
       - ./configuration/loraserver:/etc/loraserver
 
   appserver:
-    image: loraserver/lora-app-server:1
+    image: loraserver/lora-app-server
     ports:
       - 8080:8080
     volumes:
       - ./configuration/lora-app-server:/etc/lora-app-server
 
   gatewaybridge:
-    image: loraserver/lora-gateway-bridge:2
+    image: loraserver/lora-gateway-bridge
     ports:
       - 1700:1700/udp
     volumes:
       - ./configuration/lora-gateway-bridge:/etc/lora-gateway-bridge
-  
+
   postgresql:
     image: postgres:9.6-alpine
     ports:
