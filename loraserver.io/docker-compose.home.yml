@@ -1,6 +1,0 @@
-version: "2"
-
-services:
-  appserver:
-    ports:
-      - 8081:8080
