@@ -2,56 +2,40 @@ version: "2"
 
 services:
   loraserver:
-    image: loraserver/loraserver
-    restart: always
-    environment:
-      - DB_AUTOMIGRATE=true
-      - LOG_NODE_FRAMES=true
-      - NET_ID=010203
-      - BAND=EU_863_870
-      - REDIS_URL=redis://redis:6379
-      - GW_SERVER_JWT_SECRET=verysecret
-      - POSTGRES_DSN=postgres://loraserver_ns:loraserver_ns@postgresql_ns/loraserver_ns?sslmode=disable
-      - JS_SERVER=http://appserver:8003
+    image: loraserver/loraserver:1
+    volumes:
+      - ./configuration/loraserver:/etc/loraserver
 
   appserver:
-    image: loraserver/lora-app-server
-    restart: always
-    environment:
-      - DB_AUTOMIGRATE=true
-      - REDIS_URL=redis://redis:6379
-      - POSTGRES_DSN=postgres://loraserver_as:loraserver_as@postgresql_as/loraserver_as?sslmode=disable
-      - JWT_SECRET=verysecret
-      - HTTP_TLS_CERT=/etc/lora-app-server/certs/http.pem
-      - HTTP_TLS_KEY=/etc/lora-app-server/certs/http-key.pem
-      - AS_PUBLIC_SERVER=appserver:8001
+    image: loraserver/lora-app-server:1
+    ports:
+      - 8080:8080
+    volumes:
+      - ./configuration/lora-app-server:/etc/lora-app-server
 
-  postgresql_ns:
+  gatewaybridge:
+    image: loraserver/lora-gateway-bridge:2
+    ports:
+      - 1700:1700/udp
+    volumes:
+      - ./configuration/lora-gateway-bridge:/etc/lora-gateway-bridge
+  
+  postgresql:
     image: postgres:9.6-alpine
-    restart: always
     ports:
       - 5432
-    environment:
-      - POSTGRES_PASSWORD=loraserver_ns
-      - POSTGRES_USER=loraserver_ns
-      - POSTGRES_DB=loraserver_ns
-
-  postgresql_as:
-    image: postgres:9.6-alpine
-    restart: always
-    ports:
-      - 5432
-    environment:
-      - POSTGRES_PASSWORD=loraserver_as
-      - POSTGRES_USER=loraserver_as
-      - POSTGRES_DB=loraserver_as
+    volumes:
+      - ./configuration/postgresql/initdb:/docker-entrypoint-initdb.d
+      - ./data/postgresql:/var/lib/postgresql/data
 
   redis:
-    image: redis:4-alpine
-    restart: always
     ports:
       - 6379
+    image: redis:4-alpine
+    volumes:
+      - ./data/redis:/data
 
   mosquitto:
-    restart: always
     image: eclipse-mosquitto
+    ports:
+      - 1883:1883

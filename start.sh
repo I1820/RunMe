@@ -8,15 +8,9 @@
 # [] Created By : Parham Alvani <parham.alvani@gmail.com>
 # =======================================
 start-loraserver() {
-	local name="loraserverio"
+	local name=""
 
-        if [[ $ENV = "prod" ]]; then
-                docker-compose -f loraserver.io/docker-compose.yml -p $name-prod -f loraserver.io/docker-compose.prod.yml $@
-        elif [[ $ENV = "dev" ]]; then
-                docker-compose -f loraserver.io/docker-compose.yml -p $name-dev -f loraserver.io/docker-compose.dev.yml $@
-        else
-                docker-compose -f loraserver.io/docker-compose.yml -p $name-home -f loraserver.io/docker-compose.home.yml $@
-        fi
+        docker-compose -f loraserver.io/docker-compose.yml $@
 }
 
 start-mongodb() {
