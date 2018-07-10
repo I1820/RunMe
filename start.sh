@@ -43,6 +43,12 @@ start-downlink() {
         docker-compose -f downlink/docker-compose.yml $@
 }
 
+start-redis() {
+        local name=""
+
+        docker-compose -f redis/docker-compose.yml $@
+}
+
 start-prometheus() {
 	local name=""
 
