@@ -34,6 +34,8 @@ docker-compose up -d
 
 4. Run `composer install` inside `web` container
 
+5. Run `php artisan key:generate` inside `web` container
+
 ## LoRa Server Docker setup
 
 This repository contains a skeleton to setup the [LoRa Server](https://www.loraserver.io)
