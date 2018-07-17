@@ -3,8 +3,7 @@ services:
     web:
         image: 'scr12/nginx-np:71'
         ports:
-            - "80:80"
-            - "443:443"
+            - "1995:80"
         restart: always
         container_name: 'web'
         volumes:
