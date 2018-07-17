@@ -12,6 +12,28 @@ ISRC Platform server configuration.
 | Gateway Manager  | gm       | 1374 |
 
 
+## sajjad Backend
+
+1. Clone `backend` into `backend/hosts`
+
+```sh
+git clone git@github.com:aiotrc/backend backend/hosts/
+```
+
+2. Create `.env` file and config it
+
+```sh
+cp backend/hosts/backend/.env.example backend/hosts/backend/.env
+```
+
+3. Run `docker-compose`
+
+```sh
+docker-compose up -d
+```
+
+4. Run `composer install` inside `web` container
+
 ## LoRa Server Docker setup
 
 This repository contains a skeleton to setup the [LoRa Server](https://www.loraserver.io)
