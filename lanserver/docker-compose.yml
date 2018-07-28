@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  lanserver:
+    image: aiotrc/lanserver
+    environment:
+      - PORT=4000
+      - ADDR=0.0.0.0
+      - DB_URL=mongodb://172.17.0.1:27017
+    ports:
+      - 4000:4000
