@@ -55,6 +55,12 @@ start-prometheus() {
         docker-compose -f prometheus/docker-compose.yml $@
 }
 
+start-portainer() {
+        local name=""
+
+        docker-compose -f portainer/docker-compose.yml $@
+}
+
 start-uprojects() {
         # el (project) containers
         docker ps -a --filter name="el_*" --format "{{.ID}}" | xargs docker start
@@ -76,6 +82,7 @@ usage() {
         echo "mongodb           docker-compose mongodb"
         echo "loraserver        docker-compose brocaar/loraserver"
         echo "prometheus        docker-compose prom/prometheus"
+        echo "portainer         docker-compose portainer/portainer"
         echo
         echo "dm        docker-compose aiotrc/dm"
         echo "pm        docker-compose aiotrc/pm"
