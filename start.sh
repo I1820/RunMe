@@ -13,6 +13,12 @@ start-loraserver() {
         docker-compose -f loraserver.io/docker-compose.yml $@
 }
 
+start-lanserver() {
+	local name=""
+
+        docker-compose -f lanserver/docker-compose.yml $@
+}
+
 start-mongodb() {
 	local name=""
 
@@ -84,10 +90,11 @@ usage() {
         echo "prometheus        docker-compose prom/prometheus"
         echo "portainer         docker-compose portainer/portainer"
         echo
-        echo "dm        docker-compose aiotrc/dm"
-        echo "pm        docker-compose aiotrc/pm"
-        echo "uplink    docker-compose aiotrc/uplink"
-        echo "downlink  docker-compose aiotrc/downlink"
+        echo "dm         docker-compose aiotrc/dm"
+        echo "pm         docker-compose aiotrc/pm"
+        echo "uplink     docker-compose aiotrc/uplink"
+        echo "downlink   docker-compose aiotrc/downlink"
+        echo "lanserver  docker-compose aiotrc/lanserver"
         echo
         echo "uprojects platfrom users project/redis dockers"
         echo "cleanup   cleans the database up"
