@@ -3,6 +3,7 @@ version: "2"
 services:
   downlink:
     image: aiotrc/downlink
+    restart: always
     ports:
       - "1373:1373"
     environment:

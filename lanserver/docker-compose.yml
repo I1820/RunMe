@@ -3,6 +3,7 @@ version: "2"
 services:
   lanserver:
     image: aiotrc/lanserver
+    restart: always
     environment:
       - PORT=4000
       - ADDR=0.0.0.0
