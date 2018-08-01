@@ -1,0 +1,8 @@
+version: "2"
+
+services:
+  gm:
+    image: aiotrc/gm
+    restart: always
+    ports:
+      - 1374:1374
