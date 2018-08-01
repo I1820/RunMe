@@ -67,6 +67,13 @@ start-portainer() {
         docker-compose -f portainer/docker-compose.yml $@
 }
 
+start-gm() {
+        local name=""
+
+        docker-compose -f gm/docker-compose.yml $@
+}
+
+
 start-uprojects() {
         # el (project) containers
         docker ps -a --filter name="el_*" --format "{{.ID}}" | xargs docker start
@@ -92,6 +99,7 @@ usage() {
         echo
         echo "dm         docker-compose aiotrc/dm"
         echo "pm         docker-compose aiotrc/pm"
+        echo "gm         docker-compose aiotrc/gm"
         echo "uplink     docker-compose aiotrc/uplink"
         echo "downlink   docker-compose aiotrc/downlink"
         echo "lanserver  docker-compose aiotrc/lanserver"
