@@ -3,11 +3,13 @@ version: "3"
 services:
   loraserver:
     image: loraserver/loraserver:1
+    restart: always
     volumes:
       - ./configuration/loraserver:/etc/loraserver
 
   appserver:
     image: loraserver/lora-app-server:1
+    restart: always
     ports:
       - 8081:8080
     volumes:
@@ -15,6 +17,7 @@ services:
 
   gatewaybridge:
     image: loraserver/lora-gateway-bridge
+    restart: always
     ports:
       - 1700:1700/udp
     volumes:
@@ -22,6 +25,7 @@ services:
 
   postgresql:
     image: postgres:9.6-alpine
+    restart: always
     ports:
       - 5432
     volumes:
@@ -32,10 +36,12 @@ services:
     ports:
       - 6379
     image: redis:4-alpine
+    restart: always
     volumes:
       - ./data/redis:/data
 
   mosquitto:
     image: eclipse-mosquitto
+    restart: always
     ports:
       - 1883:1883

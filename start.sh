@@ -11,6 +11,12 @@ start-loraserver() {
         docker-compose -f loraserver.io/docker-compose.yml $@
 }
 
+start-lanserver() {
+	local name=""
+
+        docker-compose -f lanserver/docker-compose.yml $@
+}
+
 start-mongodb() {
         docker-compose -f mongodb/docker-compose.yml $@
 }
@@ -44,6 +50,19 @@ start-prometheus() {
         docker-compose -f prometheus/docker-compose.yml $@
 }
 
+start-portainer() {
+        local name=""
+
+        docker-compose -f portainer/docker-compose.yml $@
+}
+
+start-gm() {
+        local name=""
+
+        docker-compose -f gm/docker-compose.yml $@
+}
+
+
 start-uprojects() {
         # el (project) containers
         docker ps -a --filter name="el_*" --format "{{.ID}}" | xargs docker start
@@ -65,11 +84,14 @@ usage() {
         echo "mongodb           docker-compose mongodb"
         echo "loraserver        docker-compose brocaar/loraserver"
         echo "prometheus        docker-compose prom/prometheus"
+        echo "portainer         docker-compose portainer/portainer"
         echo
-        echo "dm        docker-compose aiotrc/dm"
-        echo "pm        docker-compose aiotrc/pm"
-        echo "uplink    docker-compose aiotrc/uplink"
-        echo "downlink  docker-compose aiotrc/downlink"
+        echo "dm         docker-compose aiotrc/dm"
+        echo "pm         docker-compose aiotrc/pm"
+        echo "gm         docker-compose aiotrc/gm"
+        echo "uplink     docker-compose aiotrc/uplink"
+        echo "downlink   docker-compose aiotrc/downlink"
+        echo "lanserver  docker-compose aiotrc/lanserver"
         echo
         echo "uprojects platfrom users project/redis dockers"
         echo "cleanup   cleans the database up"

@@ -3,9 +3,10 @@ version: "2"
 services:
   dm:
     image: aiotrc/dm
+    restart: always
     environment:
       - db_url=172.17.0.1
-      - loraserver_url=platform.ceit.aut.ac.ir:50013
+      - loraserver_url=172.17.0.1:8081
       - TZ=Asia/Tehran
     ports:
       - 1372:1372
