@@ -8,8 +8,6 @@
 # [] Created By : Parham Alvani <parham.alvani@gmail.com>
 # =======================================
 start-loraserver() {
-	local name=""
-
         docker-compose -f loraserver.io/docker-compose.yml $@
 }
 
@@ -20,44 +18,35 @@ start-lanserver() {
 }
 
 start-mongodb() {
-	local name=""
-
         docker-compose -f mongodb/docker-compose.yml $@
 }
 
 start-pm() {
-	local name=""
+        # please wait for requirements
+        docker pull aiotrc/gorunner
+        docker pull redis:alpine
+        docker network create isrc
 
         docker-compose -f pm/docker-compose.yml $@
 }
 
 start-dm() {
-	local name=""
-
         docker-compose -f dm/docker-compose.yml $@
 }
 
 start-uplink() {
-	local name=""
-
         docker-compose -f uplink/docker-compose.yml $@
 }
 
 start-downlink() {
-	local name=""
-
         docker-compose -f downlink/docker-compose.yml $@
 }
 
 start-redis() {
-        local name=""
-
         docker-compose -f redis/docker-compose.yml $@
 }
 
 start-prometheus() {
-	local name=""
-
         docker-compose -f prometheus/docker-compose.yml $@
 }
 
