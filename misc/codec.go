@@ -23,37 +23,39 @@ import (
 )
 
 func main() {
-	projectID := "hello"
+	projectID := "5b6562e9e40b0a007b16c221"
 
-	url := fmt.Sprintf("http://185.116.162.237:8080/api/runners/%s/codec", projectID)
+	url := fmt.Sprintf("http://192.168.0.200:8080/api/runners/%s/codec", projectID)
 
 	code, _ := ioutil.ReadFile("codec.py")
 
-	payload, _ := json.Marshal(struct {
-		ID   string `json:"id"`
-		Code string `json:"code"`
-	}{
-		ID:   "0000000000000073",
-		Code: string(code),
-	})
+	for devEUI := 11; devEUI < 514; devEUI++ {
+		payload, _ := json.Marshal(struct {
+			ID   string `json:"id"`
+			Code string `json:"code"`
+		}{
+			ID:   fmt.Sprintf("1100000000000%03d", devEUI),
+			Code: string(code),
+		})
 
-	req, _ := http.NewRequest("POST", url, bytes.NewReader(payload))
+		req, _ := http.NewRequest("POST", url, bytes.NewReader(payload))
 
-	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("Cache-Control", "no-cache")
+		req.Header.Add("Content-Type", "application/json")
+		req.Header.Add("Cache-Control", "no-cache")
 
-	res, err := http.DefaultClient.Do(req)
-	if err != nil {
-		log.Fatal(err)
+		res, err := http.DefaultClient.Do(req)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		defer res.Body.Close()
+		body, err := ioutil.ReadAll(res.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Println(res)
+		fmt.Println(string(body))
 	}
-
-	defer res.Body.Close()
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(res)
-	fmt.Println(string(body))
 
 }
