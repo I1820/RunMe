@@ -8,3 +8,8 @@ services:
       - 27017:27017
     volumes:
       - ./mongo/data:/data/db
+
+networks:
+  default:
+    external:
+      name: i1820
