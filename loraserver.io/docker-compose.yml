@@ -1,3 +1,4 @@
+---
 version: "3"
 
 services:
@@ -16,7 +17,7 @@ services:
       - ./configuration/lora-app-server:/etc/lora-app-server
 
   gatewaybridge:
-    image: loraserver/lora-gateway-bridge
+    image: loraserver/lora-gateway-bridge:2
     restart: always
     ports:
       - 1700:1700/udp

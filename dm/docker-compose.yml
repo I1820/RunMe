@@ -2,11 +2,9 @@ version: "2"
 
 services:
   dm:
-    image: aiotrc/dm
+    image: i1820/dm
     restart: always
     environment:
-      - db_url=172.17.0.1
-      - loraserver_url=172.17.0.1:8081
-      - TZ=Asia/Tehran
+      I1820_DM_DATABASE_URL: mongodb://172.17.0.1:27017
     ports:
-      - 1372:1372
+      - 1373:1373

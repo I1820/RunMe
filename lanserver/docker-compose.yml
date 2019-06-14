@@ -2,12 +2,11 @@ version: "2"
 
 services:
   lanserver:
-    image: aiotrc/lanserver
+    image: i1820/lanserver
     restart: always
     environment:
-      - PORT=4000
-      - ADDR=0.0.0.0
-      - DB_URL=mongodb://127.0.0.1:27017
-      - BROKER_URL=tcp://127.0.0.1:1883
+      - I1820_LANSERVER_DATABASE_URL=mongodb://172.17.0.1:27017
+      - I1820_LANSERVER_APP_BROKER_ADDR=tcp://172.17.0.1:1883
+      - I1820_LANSERVER_NODE_BROKER_ADDR=tcp://172.17.0.1:1883
     ports:
       - 4000:4000

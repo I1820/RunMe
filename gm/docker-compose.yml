@@ -2,7 +2,7 @@ version: "2"
 
 services:
   gm:
-    image: aiotrc/gm
+    image: i1820/gm
     restart: always
     ports:
       - 1374:1374
