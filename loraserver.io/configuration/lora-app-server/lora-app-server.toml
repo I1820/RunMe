@@ -95,7 +95,7 @@ id="6d5db27e-4ce2-4b2b-b5d7-91f069397978"
   error_topic_template="application/{{ .ApplicationID }}/device/{{ .DevEUI }}/error"
 
   # MQTT server (e.g. scheme://host:port where scheme is tcp, ssl or ws)
-  server="tcp://mosquitto:1883"
+  server="tcp://vernemq:1883"
 
   # Connect with the given username (optional)
   username=""
