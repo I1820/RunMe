@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  vernemq:
+    image: erlio/docker-vernemq
+    restart: always
+    ulimits:
+      nofile:
+        soft: 8192
+        hard: 65536
+    ports:
+      - 1883:1883
+      - 8888:8888
+    environment:
+      - "DOCKER_VERNEMQ_ALLOW_ANONYMOUS=on"
+      - "DOCKER_VERNEMQ_LISTENER.tcp.max_connections=10000"
+      - "DOCKER_VERNEMQ_LISTENER.tcp.nr_of_acceptors=100"
+
+networks:
+  default:
+    external:
+      name: i1820
