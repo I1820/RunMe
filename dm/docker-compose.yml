@@ -1,10 +1,15 @@
-version: "2"
+version: "3"
 
 services:
   dm:
     image: i1820/dm
     restart: always
     environment:
-      I1820_DM_DATABASE_URL: mongodb://172.17.0.1:27017
+      I1820_DM_DATABASE_URL: mongodb://mongodb:27017
     ports:
       - 1373:1373
+
+networks:
+  default:
+    external:
+      name: i1820
