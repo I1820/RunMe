@@ -29,15 +29,15 @@ up-vernemq() {
 # monitoring
 
 up-prometheus() {
-        docker-compose -f prometheus/docker-compose.yml $@
+        docker-compose -f prometheus/docker-compose.yml up -d
 }
 
 up-portainer() {
-        docker-compose -f portainer/docker-compose.yml $@
+        docker-compose -f portainer/docker-compose.yml up -d
 }
 
 up-grafana() {
-        docker-compose -f grafana/docker-compose.yml $@
+        docker-compose -f grafana/docker-compose.yml up -d
 }
 
 # utils
