@@ -40,54 +40,20 @@ up-grafana() {
         docker-compose -f grafana/docker-compose.yml $@
 }
 
-start-pm() {
-        # please wait for requirements
-        docker pull aiotrc/gorunner
-        docker pull redis:alpine
-        docker network create isrc
+# utils
 
-        docker-compose -f pm/docker-compose.yml $@
-}
-
-start-dm() {
-        docker-compose -f dm/docker-compose.yml $@
-}
-
-start-uplink() {
-        docker-compose -f uplink/docker-compose.yml $@
-}
-
-start-downlink() {
-        docker-compose -f downlink/docker-compose.yml $@
-}
-
-start-lanserver() {
-        docker-compose -f lanserver/docker-compose.yml $@
-}
-
-start-gm() {
-        docker-compose -f gm/docker-compose.yml $@
-}
-
-
-start-uprojects() {
+up-uprojects() {
         # el (project) containers
         docker ps -a --filter name="el_*" --format "{{.ID}}" | xargs docker start
         # rd (redis) containers
         docker ps -a --filter name="rd_*" --format "{{.ID}}" | xargs docker start
 }
 
-start-cleanup() {
-        for name in $(curl -s "127.0.0.1:8080/api/project" | jq -r '.[].name'); do
-	        echo $name
-	        curl -X DELETE -o /dev/null -w "%{http_code}" -s "127.0.0.1:8080/api/project/$name"
-        done
-}
-
 declare -A groups
 groups=(
         ["dependencies"]="network mongodb vernemq loraserver"
         ["monitoring"]="portainer prometheus grafana"
+        ["utils"]="uprojects"
 )
 
 usage() {
@@ -110,9 +76,9 @@ usage() {
         echo "2) monitoring"
         echo
 
-
-        echo "uprojects platfrom users project/redis dockers"
-        echo "cleanup   cleans the database up"
+        echo "3) utils"
+        echo "uprojects: Platfrom user's project/redis dockers"
+        echo
 }
 
 if [[ $# -ne 2 ]]; then
