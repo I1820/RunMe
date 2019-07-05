@@ -10,7 +10,7 @@
 
 # dependencies
 
-up-network() {
+before-dependencies-up() {
         docker network create i1820
 }
 
@@ -24,6 +24,30 @@ up-mongodb() {
 
 up-vernemq() {
         docker-compose -f vernemq/docker-compose.yml up -d
+}
+
+after-dependencies-up() {
+        echo "dependencies are up"
+}
+
+before-dependencies-teardown() {
+        echo "dependencies are going down"
+}
+
+teardown-loraserver() {
+        docker-compose -f loraserver.io/docker-compose.yml down
+}
+
+teardown-mongodb() {
+        docker-compose -f mongodb/docker-compose.yml down
+}
+
+teardown-vernemq() {
+        docker-compose -f vernemq/docker-compose.yml down
+}
+
+after-dependencies-teardown() {
+        docker network rm i1820
 }
 
 # monitoring
@@ -51,7 +75,7 @@ up-uprojects() {
 
 declare -A groups
 groups=(
-        ["dependencies"]="network mongodb vernemq loraserver"
+        ["dependencies"]="mongodb vernemq loraserver"
         ["monitoring"]="portainer prometheus grafana"
         ["utils"]="uprojects"
 )
@@ -67,7 +91,6 @@ usage() {
         echo "groups:"
 
         echo "1) dependencies"
-        echo "network:    I1820 private network"
         echo "mongodb:    The most popular database for modern apps"
         echo "vernemq:    A distributed MQTT message broker based on Erlang/OTP"
         echo "loraserver: LoRa Server is an open-source LoRaWAN network-server"
@@ -96,6 +119,7 @@ fi
 
 services=${groups[$group]}
 
+"before-$group-$cmd"
 for service in $services; do
         echo "> $service"
 
@@ -108,3 +132,4 @@ for service in $services; do
 
         echo ">"
 done
+"after-$group-$cmd"
