@@ -8,19 +8,12 @@ but keep in mind that for production usage it might need modifications.
 
 ## Step by Step Guide
 
-1. create `i1820` network
+1. start all dependencies with docker
 
 ```sh
-docker network create i1820
+./start.sh dependencies up
 ```
 
-2. `mongodb`
-
-```sh
-./start.sh mongodb up -d
-```
-
-3. `vernemq`
 
 ### loraserver.io
 
