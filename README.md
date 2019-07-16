@@ -21,6 +21,8 @@ I1820 gateway broker so there is no need to configure it. I1820 services and com
 its a critical point of I1820 platform that can be considered as SPF so running it on a single node with docker is a risky task
 and must be changed on production environment.
 
+2. Run each service from its specific repository. please consider to read each repository manual.
+
 
 ### loraserver.io
 
