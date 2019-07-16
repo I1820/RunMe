@@ -118,6 +118,10 @@ if [ $cmd != "up" ] && [ $cmd != "teardown" ]; then
 fi
 
 services=${groups[$group]}
+if [ ${#services} -eq 0 ]; then
+        echo "$group is not available"
+        exit
+fi
 
 "before-$group-$cmd"
 for service in $services; do
