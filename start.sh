@@ -16,7 +16,7 @@ groups=(
         ["monitoring"]="portainer prometheus grafana"
 )
 
-handle_groups() {
+handle_group() {
         group=$1
         cmd=$2
 
