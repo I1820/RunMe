@@ -8,7 +8,46 @@
 # [] Created By : Parham Alvani <parham.alvani@gmail.com>
 # =======================================
 
-# dependencies
+# groups
+
+declare -A groups
+groups=(
+        ["dependencies"]="mongodb vernemq loraserver"
+        ["monitoring"]="portainer prometheus grafana"
+)
+
+handle_groups() {
+        group=$1
+        cmd=$2
+
+        if [ $cmd != "up" ] && [ $cmd != "teardown" ]; then
+                return
+        fi
+
+        services=${groups[$group]}
+        if [ ${#services} -eq 0 ]; then
+                echo "$group is not available"
+                return
+        fi
+
+
+        "before-$group-$cmd"
+        for service in $services; do
+                echo "> $service"
+
+                start=$(date +'%s')
+
+                "$cmd-$service"
+
+                took=$(( $(date +'%s') - $start ))
+                printf "Done. Took %ds.\n" $took
+
+                echo ">"
+        done
+        "after-$group-$cmd"
+}
+
+## dependencies
 
 before-dependencies-up() {
         docker network create i1820
@@ -50,7 +89,7 @@ after-dependencies-teardown() {
         docker network rm i1820
 }
 
-# monitoring
+## monitoring
 
 up-prometheus() {
         docker-compose -f prometheus/docker-compose.yml up -d
@@ -66,19 +105,23 @@ up-grafana() {
 
 # utils
 
-up-uprojects() {
+handle_utils() {
+        cmd=$1
+
+        if [ "$(type -t $cmd)" == 'function' ]; then
+                $cmd
+        else
+                echo "$cmd is not a util command"
+                return
+        fi
+}
+
+uprojects() {
         # el (project) containers
         docker ps -a --filter name="el_*" --format "{{.ID}}" | xargs docker start
         # rd (redis) containers
         docker ps -a --filter name="rd_*" --format "{{.ID}}" | xargs docker start
 }
-
-declare -A groups
-groups=(
-        ["dependencies"]="mongodb vernemq loraserver"
-        ["monitoring"]="portainer prometheus grafana"
-        ["utils"]="uprojects"
-)
 
 usage() {
         echo "usage: start.sh <group> <up/teardown>"
@@ -112,28 +155,8 @@ fi
 group=$1
 cmd=$2
 
-if [ $cmd != "up" ] && [ $cmd != "teardown" ]; then
-        usage
-        exit
+if [ $group == "utils" ]; then
+        handle_utils $cmd
+else
+        handle_group $group $cmd
 fi
-
-services=${groups[$group]}
-if [ ${#services} -eq 0 ]; then
-        echo "$group is not available"
-        exit
-fi
-
-"before-$group-$cmd"
-for service in $services; do
-        echo "> $service"
-
-        start=$(date +'%s')
-
-        "$cmd-$service"
-
-        took=$(( $(date +'%s') - $start ))
-        printf "Done. Took %ds.\n" $took
-
-        echo ">"
-done
-"after-$group-$cmd"
