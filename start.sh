@@ -140,6 +140,9 @@ usage() {
         echo
 
         echo "2) monitoring"
+        echo "portainer: Making Docker management easy"
+        echo "prometheus: Power your metrics and alerting with a leading open-source monitoring solution"
+        echo "grafana: The open platform for beautiful analytics and monitoring"
         echo
 
         echo "usage: start.sh utils <cmd>"
