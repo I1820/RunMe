@@ -31,7 +31,7 @@ handle_groups() {
         fi
 
 
-        "before-$group-$cmd"
+        "before-$group-$cmd" || true
         for service in $services; do
                 echo "> $service"
 
@@ -44,7 +44,7 @@ handle_groups() {
 
                 echo ">"
         done
-        "after-$group-$cmd"
+        "after-$group-$cmd" || true
 }
 
 ## dependencies
