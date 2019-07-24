@@ -117,9 +117,9 @@ handle_utils() {
 }
 
 uprojects() {
-        # el (project) containers
+        echo "el (project) containers"
         docker ps -a --filter name="el_*" --format "{{.ID}}" | xargs docker start
-        # rd (redis) containers
+        echo "rd (redis) containers"
         docker ps -a --filter name="rd_*" --format "{{.ID}}" | xargs docker start
 }
 
