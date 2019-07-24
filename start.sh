@@ -142,8 +142,10 @@ usage() {
         echo "2) monitoring"
         echo
 
-        echo "3) utils"
-        echo "uprojects: Platfrom user's project/redis dockers"
+        echo "usage: start.sh utils <cmd>"
+
+        echo "commands:"
+        echo "uprojects: Start platfrom user's project/redis dockers"
         echo
 }
 
